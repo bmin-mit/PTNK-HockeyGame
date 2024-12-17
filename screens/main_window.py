@@ -1,21 +1,17 @@
 import pygame
 from pygame import Color
 from utils import fonts
-from screens.ingame import Ingame
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-FPS = 60
 
 
 class MainWindow:
     __screen: pygame.Surface
-    __clock: pygame.time.Clock
     __is_running: bool
 
     def __init__(self):
         self.__screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        self.__clock = pygame.time.Clock()
         self.__draw()
 
         self.__main_loop()
@@ -41,7 +37,6 @@ class MainWindow:
         while self.__is_running:
             for event in pygame.event.get():
                 self.__handle_event(event)
-            self.__clock.tick(FPS)
 
     def __handle_event(self, event):
         keys = pygame.key.get_pressed()
@@ -51,4 +46,5 @@ class MainWindow:
 
         if event.type == pygame.KEYDOWN:
             if keys[pygame.K_RETURN]:
+                from screens.ingame import Ingame
                 Ingame(self.__screen)
