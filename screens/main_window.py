@@ -37,6 +37,9 @@ class MainWindow:
         while self.__is_running:
             for event in pygame.event.get():
                 self.__handle_event(event)
+            
+            self.__draw()
+            pygame.display.flip()
 
     def __handle_event(self, event):
         keys = pygame.key.get_pressed()
