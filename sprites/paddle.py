@@ -9,10 +9,13 @@ class Paddle(Rect):
     speed: int = 5
     rect: Rect
     screen: pygame.Surface
+    sound: pygame.mixer.Sound
 
     def __init__(self, screen, pos_x, pos_y):
         super().__init__(pos_x, pos_y, self.width, self.height)
         self.screen = screen
+        self.sound = pygame.mixer.Sound('./assets/pong.mp3')
+        self.sound.set_volume(3)
 
     def move_up(self):
         if self.y > 0:
@@ -24,3 +27,6 @@ class Paddle(Rect):
 
     def draw(self):
         pygame.draw.rect(self.screen, Color('aquamarine4'), self)
+
+    def play_sound(self):
+        self.sound.play()

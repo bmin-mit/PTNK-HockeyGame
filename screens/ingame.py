@@ -76,8 +76,10 @@ class InGame:
 
         if self.__paddle_left.collidepoint(self.__ball.x - Ball.RADIUS, self.__ball.y):
             self.__ball.bounce_left()
+            self.__paddle_left.play_sound()
         if self.__paddle_right.collidepoint(self.__ball.x + Ball.RADIUS, self.__ball.y):
             self.__ball.bounce_right()
+            self.__paddle_right.play_sound()
         if self.__ball.y - Ball.RADIUS < 0:
             self.__ball.bounce_top()
         if self.__ball.y + Ball.RADIUS > SCREEN_HEIGHT:
