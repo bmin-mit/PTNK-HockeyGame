@@ -20,12 +20,12 @@ class Instruction:
 
     def draw1(self):
         self.__screen.fill(Color('antiquewhite'))
-        title_text = fonts.TITLE_TEXT_STYLE.render("Hockeyyy!!!!!",
+        title_text = fonts.INSTRUCTION_TEXT_STYLE.render("Press W, S to move\nthe left paddle",
                                                    True, Color('antiquewhite4'))
         self.__screen.blit(title_text,
                            (self.SCREEN_WIDTH // 2 - title_text.get_width() // 2, self.SCREEN_HEIGHT // 2 - 100))
 
-        continue_text = fonts.BODY_TEXT_STYLE.render("Press SPACE to continue (draw1)",
+        continue_text = fonts.BODY_TEXT_STYLE.render("Press SPACE to continue",
                                                      True, Color('antiquewhite3'))
         self.__screen.blit(continue_text,
                            (self.SCREEN_WIDTH // 2 - continue_text.get_width() // 2, self.SCREEN_HEIGHT // 2))
@@ -34,12 +34,12 @@ class Instruction:
 
     def draw2(self):
         self.__screen.fill(Color('antiquewhite'))
-        title_text = fonts.TITLE_TEXT_STYLE.render("Hockeyyy!!!!!",
+        title_text = fonts.INSTRUCTION_TEXT_STYLE.render("Press UP, DOWN to move\nthe right paddle",
                                                    True, Color('antiquewhite4'))
         self.__screen.blit(title_text,
                            (self.SCREEN_WIDTH // 2 - title_text.get_width() // 2, self.SCREEN_HEIGHT // 2 - 100))
 
-        continue_text = fonts.BODY_TEXT_STYLE.render("Press SPACE to continue (draw2)",
+        continue_text = fonts.BODY_TEXT_STYLE.render("Press SPACE to continue",
                                                      True, Color('antiquewhite3'))
         self.__screen.blit(continue_text,
                            (self.SCREEN_WIDTH // 2 - continue_text.get_width() // 2, self.SCREEN_HEIGHT // 2))
@@ -48,12 +48,12 @@ class Instruction:
 
     def draw3(self):
         self.__screen.fill(Color('antiquewhite'))
-        title_text = fonts.TITLE_TEXT_STYLE.render("Hockeyyy!!!!!",
+        title_text = fonts.INSTRUCTION_TEXT_STYLE.render("First one score\n5pts will win.",
                                                    True, Color('antiquewhite4'))
         self.__screen.blit(title_text,
                            (self.SCREEN_WIDTH // 2 - title_text.get_width() // 2, self.SCREEN_HEIGHT // 2 - 100))
 
-        continue_text = fonts.BODY_TEXT_STYLE.render("Press SPACE to continue (draw3)",
+        continue_text = fonts.BODY_TEXT_STYLE.render("Press SPACE to PLAY!",
                                                      True, Color('antiquewhite3'))
         self.__screen.blit(continue_text,
                            (self.SCREEN_WIDTH // 2 - continue_text.get_width() // 2, self.SCREEN_HEIGHT // 2))
