@@ -72,8 +72,7 @@ class Instruction:
                 self.__is_running = False
                 break
 
-            obj = getattr(self, f"draw{self.count}")
-            obj()
+            getattr(self, f"draw{self.count}")()
 
             pygame.display.flip()
 

@@ -17,6 +17,7 @@ class MainWindow:
         self.__screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.__button1 = Button(self.__screen, SCREEN_WIDTH // 2, 275, "Start")
         self.__button2 = Button(self.__screen, SCREEN_WIDTH // 2, 350, "Instruction")
+        self.__button3 = Button(self.__screen, SCREEN_WIDTH // 2, 425, "Recent Score")
 
         self.__main_loop()
 
@@ -30,6 +31,7 @@ class MainWindow:
 
         self.__button1.draw()
         self.__button2.draw()
+        self.__button3.draw()
 
         pygame.display.flip()
 
@@ -60,3 +62,6 @@ class MainWindow:
                 InGame(self.__screen)
             elif self.__button2.collidepoint(pygame.mouse.get_pos()):
                 Instruction(self.__screen)
+            elif self.__button3.collidepoint(pygame.mouse.get_pos()):
+                from screens.recent_score import RecentScore
+                RecentScore(self.__screen)

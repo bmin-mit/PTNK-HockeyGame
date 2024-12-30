@@ -3,6 +3,7 @@ from pygame.color import Color
 from sprites.paddle import Paddle
 from sprites.ball import Ball
 from utils import fonts
+from utils.score import write_data
 
 FPS = 60
 
@@ -95,6 +96,7 @@ class InGame:
             self.__reset_ball()
 
         if max(self.__score_left, self.__score_right) == 5:
+            write_data(self.__score_left, self.__score_right)
             while True:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
