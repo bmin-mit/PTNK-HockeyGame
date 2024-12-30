@@ -26,7 +26,7 @@ class RecentScore:
 
         score_data = read_data()
         for idx, line in enumerate(score_data):
-            score_text = fonts.BODY_TEXT_STYLE.render(" - ".join(line), True, Color('antiquewhite4'))
+            score_text = fonts.SCORE_TEXT_STYLE.render(" - ".join(line.split(",")), True, Color('antiquewhite4'))
             self.__screen.blit(score_text, (self.SCREEN_WIDTH // 2 - score_text.get_width() // 2, 200 + idx * 40))
 
         continue_text = fonts.BODY_TEXT_STYLE.render("Click mouse to continue",
@@ -49,7 +49,7 @@ class RecentScore:
 
     def __handle_event(self, event):
         if event.type == pygame.QUIT:
-            self.__is_running = False
+            pygame.quit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             return True

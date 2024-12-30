@@ -101,10 +101,9 @@ class InGame:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         pygame.quit()
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_RETURN:
-                            self.__is_running = False
-                            return
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        self.__is_running = False
+                        return
 
                 self.__screen.fill(Color('antiquewhite'))
 
@@ -114,7 +113,7 @@ class InGame:
                 ) // 2, SCREEN_HEIGHT // 2 - title_text.get_height() // 2))
 
                 body_text = fonts.BODY_TEXT_STYLE.render(
-                    "Press ENTER to play again!", True, Color('antiquewhite4'))
+                    "Click mouse to back to menu!", True, Color('antiquewhite4'))
                 self.__screen.blit(body_text, (SCREEN_WIDTH // 2 - body_text.get_width() // 2, SCREEN_HEIGHT //2 - body_text.get_height() // 2 + 50))
 
                 pygame.display.flip()
