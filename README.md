@@ -1,4 +1,4 @@
-# Bài tập game 10/12
+# Bài tập pygame
 
 - Nguyễn Hải Đăng
 - Đoàn Ngọc Bình Minh
