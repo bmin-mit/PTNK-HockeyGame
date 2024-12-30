@@ -1,5 +1,7 @@
 import pygame
 from pygame import Color
+
+from screens.instruction import Instruction
 from utils import fonts
 
 SCREEN_WIDTH = 800
@@ -24,7 +26,7 @@ class MainWindow:
         self.__screen.blit(title_text,
                            (SCREEN_WIDTH // 2 - title_text.get_width() // 2, SCREEN_HEIGHT // 2 - 100))
 
-        continue_text = fonts.BODY_TEXT_STYLE.render("Press ENTER to continue",
+        continue_text = fonts.BODY_TEXT_STYLE.render("Press SPACE to continue",
                                                      True, Color('antiquewhite3'))
         self.__screen.blit(continue_text,
                            (SCREEN_WIDTH // 2 - continue_text.get_width() // 2, SCREEN_HEIGHT // 2))
@@ -48,6 +50,7 @@ class MainWindow:
             self.__is_running = False
 
         if event.type == pygame.KEYDOWN:
-            if keys[pygame.K_RETURN]:
-                from screens.ingame import Ingame
-                Ingame(self.__screen)
+            if keys[pygame.K_SPACE]:
+                Instruction(self.__screen)
+                from screens.ingame import InGame
+                InGame(self.__screen)

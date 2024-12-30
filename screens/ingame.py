@@ -7,7 +7,7 @@ from utils import fonts
 FPS = 60
 
 
-class Ingame:
+class InGame:
     __paddle_left: Paddle
     __paddle_right: Paddle
     __ball: Ball
@@ -18,7 +18,7 @@ class Ingame:
     __score_right: int = 0
 
     def __init__(self, screen):
-        from screens.main_window import SCREEN_HEIGHT, SCREEN_WIDTH
+        from .main_window import SCREEN_HEIGHT, SCREEN_WIDTH
 
         self.__screen = screen
 
@@ -92,7 +92,7 @@ class Ingame:
             self.__increase_speed()
             self.__reset_ball()
 
-        if max(self.__score_left, self.__score_right) == 3:
+        if max(self.__score_left, self.__score_right) == 5:
             while True:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -118,7 +118,7 @@ class Ingame:
         pygame.display.flip()
 
     def __increase_speed(self):
-        self.__speed += 1.5
+        self.__speed += 0.5
         self.__paddle_left.speed += 0.5
         self.__paddle_right.speed += 0.5
 
