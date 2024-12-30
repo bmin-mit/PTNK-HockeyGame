@@ -7,7 +7,7 @@ class Instruction:
     __is_running: bool
 
     def __init__(self, screen):
-        from .main_window import SCREEN_WIDTH, SCREEN_HEIGHT
+        from screens.main_window import SCREEN_WIDTH, SCREEN_HEIGHT
         self.__screen = screen
 
         self.SCREEN_WIDTH = SCREEN_WIDTH
@@ -25,7 +25,7 @@ class Instruction:
         self.__screen.blit(title_text,
                            (self.SCREEN_WIDTH // 2 - title_text.get_width() // 2, self.SCREEN_HEIGHT // 2 - 100))
 
-        continue_text = fonts.BODY_TEXT_STYLE.render("Press SPACE to continue",
+        continue_text = fonts.BODY_TEXT_STYLE.render("Click mouse to continue",
                                                      True, Color('antiquewhite3'))
         self.__screen.blit(continue_text,
                            (self.SCREEN_WIDTH // 2 - continue_text.get_width() // 2, self.SCREEN_HEIGHT // 2))
@@ -39,7 +39,7 @@ class Instruction:
         self.__screen.blit(title_text,
                            (self.SCREEN_WIDTH // 2 - title_text.get_width() // 2, self.SCREEN_HEIGHT // 2 - 100))
 
-        continue_text = fonts.BODY_TEXT_STYLE.render("Press SPACE to continue",
+        continue_text = fonts.BODY_TEXT_STYLE.render("Click mouse to continue",
                                                      True, Color('antiquewhite3'))
         self.__screen.blit(continue_text,
                            (self.SCREEN_WIDTH // 2 - continue_text.get_width() // 2, self.SCREEN_HEIGHT // 2))
@@ -53,7 +53,7 @@ class Instruction:
         self.__screen.blit(title_text,
                            (self.SCREEN_WIDTH // 2 - title_text.get_width() // 2, self.SCREEN_HEIGHT // 2 - 100))
 
-        continue_text = fonts.BODY_TEXT_STYLE.render("Press SPACE to PLAY!",
+        continue_text = fonts.BODY_TEXT_STYLE.render("Click mouse to back to main menu",
                                                      True, Color('antiquewhite3'))
         self.__screen.blit(continue_text,
                            (self.SCREEN_WIDTH // 2 - continue_text.get_width() // 2, self.SCREEN_HEIGHT // 2))
@@ -83,7 +83,6 @@ class Instruction:
         if event.type == pygame.QUIT:
             self.__is_running = False
 
-        if event.type == pygame.KEYDOWN:
-            if keys[pygame.K_SPACE]:
-                return True
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            return True
         return False

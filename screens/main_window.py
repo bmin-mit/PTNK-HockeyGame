@@ -3,6 +3,7 @@ from pygame import Color
 
 from screens.instruction import Instruction
 from utils import fonts
+from sprites.button import Button
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -14,7 +15,8 @@ class MainWindow:
 
     def __init__(self):
         self.__screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        self.__draw()
+        self.__button1 = Button(self.__screen, SCREEN_WIDTH // 2, 275, "Start")
+        self.__button2 = Button(self.__screen, SCREEN_WIDTH // 2, 350, "Instruction")
 
         self.__main_loop()
 
@@ -24,12 +26,10 @@ class MainWindow:
         title_text = fonts.TITLE_TEXT_STYLE.render("Hockeyyy!!!!!",
                                                    True, Color('antiquewhite4'))
         self.__screen.blit(title_text,
-                           (SCREEN_WIDTH // 2 - title_text.get_width() // 2, SCREEN_HEIGHT // 2 - 100))
+                           (SCREEN_WIDTH // 2 - title_text.get_width() // 2, SCREEN_HEIGHT // 2 - 150))
 
-        continue_text = fonts.BODY_TEXT_STYLE.render("Press SPACE to continue",
-                                                     True, Color('antiquewhite3'))
-        self.__screen.blit(continue_text,
-                           (SCREEN_WIDTH // 2 - continue_text.get_width() // 2, SCREEN_HEIGHT // 2))
+        self.__button1.draw()
+        self.__button2.draw()
 
         pygame.display.flip()
 
@@ -54,3 +54,9 @@ class MainWindow:
                 Instruction(self.__screen)
                 from screens.ingame import InGame
                 InGame(self.__screen)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.__button1.collidepoint(pygame.mouse.get_pos()):
+                from screens.ingame import InGame
+                InGame(self.__screen)
+            elif self.__button2.collidepoint(pygame.mouse.get_pos()):
+                Instruction(self.__screen)

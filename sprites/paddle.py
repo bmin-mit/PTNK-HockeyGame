@@ -1,4 +1,3 @@
-from screens.main_window import SCREEN_HEIGHT
 from pygame.color import Color
 from pygame import Rect
 import pygame
@@ -11,6 +10,11 @@ class Paddle(Rect):
     screen: pygame.Surface
 
     def __init__(self, screen, pos_x, pos_y):
+        from screens.main_window import SCREEN_HEIGHT, SCREEN_WIDTH
+
+        self.SCREEN_HEIGHT = SCREEN_HEIGHT
+        self.SCREEN_WIDTH = SCREEN_WIDTH
+
         super().__init__(pos_x, pos_y, self.width, self.height)
         self.screen = screen
 
@@ -19,7 +23,7 @@ class Paddle(Rect):
             self.move_ip(0, -self.speed)
 
     def move_down(self):
-        if self.y + self.height < SCREEN_HEIGHT:
+        if self.y + self.height < self.SCREEN_HEIGHT:
             self.move_ip(0, self.speed)
 
     def draw(self):
