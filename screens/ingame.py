@@ -18,7 +18,7 @@ class InGame:
     __score_right: int = 0
 
     def __init__(self, screen):
-        from .main_window import SCREEN_HEIGHT, SCREEN_WIDTH
+        from screens.main_window import SCREEN_HEIGHT, SCREEN_WIDTH
 
         self.__screen = screen
 
