@@ -130,24 +130,6 @@ class InGame:
                            (self.SCREEN_WIDTH // 2 - score_text.get_width() // 2,
                             self.SCREEN_HEIGHT // 2 - score_text.get_height() // 2))
 
-        up_text = fonts.BODY_TEXT_STYLE.render(
-            "UP", True, Color('antiquewhite4'))
-        self.__screen.blit(up_text,
-                           (self.SCREEN_WIDTH - up_text.get_width() - 40, 40))
-        down_text = fonts.BODY_TEXT_STYLE.render(
-            "DOWN", True, Color('antiquewhite4'))
-        self.__screen.blit(down_text,
-                           (self.SCREEN_WIDTH - down_text.get_width() - 40, self.SCREEN_HEIGHT - down_text.get_height() - 40))
-
-        w_text = fonts.BODY_TEXT_STYLE.render(
-            "W", True, Color('antiquewhite4'))
-        self.__screen.blit(w_text,
-                           (40, 40))
-        s_text = fonts.BODY_TEXT_STYLE.render(
-            "S", True, Color('antiquewhite4'))
-        self.__screen.blit(s_text,
-                           (40, self.SCREEN_HEIGHT - s_text.get_height() - 40))
-
         self.__paddle_left.draw()
         self.__paddle_right.draw()
         self.__ball.move()
