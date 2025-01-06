@@ -1,12 +1,15 @@
+import cv2
 import pygame
 from pygame.color import Color
 from sprites.paddle import Paddle
 from sprites.ball import Ball
 from utils import fonts
 from utils.score import write_data
+import mediapipe as mp
 
 FPS = 60
 
+mp_drawing = mp.solutions.drawing_utils
 
 class InGame:
     __paddle_left: Paddle
@@ -17,6 +20,7 @@ class InGame:
     __speed: float = 5
     __score_left: int = 0
     __score_right: int = 0
+    __hands: mp.solutions.hands.Hands
 
     def __init__(self, screen):
         from screens.main_window import SCREEN_HEIGHT, SCREEN_WIDTH
@@ -30,7 +34,51 @@ class InGame:
         self.__ball = Ball(self.__screen,
                            SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, self.__speed)
 
+        self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        self.ret, self.frame = self.cap.read()
+        cv2.imshow('frame', self.frame)
+        cv2.moveWindow('frame', 0, 0)
+        self.hands = mp.solutions.hands.Hands(static_image_mode=False,
+                                              max_num_hands=2,
+                                              min_detection_confidence=0.5,
+                                              model_complexity=1)
+
         self.__main_loop()
+
+    def __show_camera(self):
+        self.ret, self.frame = self.cap.read()
+        if self.ret:
+            self.cv2_window_dimension = (x, y, w, h) = cv2.getWindowImageRect('frame')
+            self.frame = cv2.flip(self.frame, 1)
+            cv2.line(self.frame, (w // 2, 0), (w // 2, h), (0, 0, 255), 2)
+            self.__draw_landmarks(self.frame)
+            cv2.imshow('frame', self.frame)
+            self.__hand_gestures()
+    
+    def __hand_gestures(self):
+        multi_hand_landmarks = self.result.multi_hand_landmarks
+        w, h = self.cv2_window_dimension[2:]
+
+        if multi_hand_landmarks:
+            for hand_landmarks in multi_hand_landmarks:
+                index_base = hand_landmarks.landmark[5]
+                index_tip = hand_landmarks.landmark[8]
+                
+                print(index_base, index_tip)
+
+                x_tip, y_tip = int(index_tip.x * w), int(index_tip.y * h)
+                x_base, y_base = int(index_base.x * w), int(index_base.y * h)
+                
+                if x_base < w // 2:
+                    if y_tip < y_base:
+                        self.__paddle_left.move_up()
+                    else:
+                        self.__paddle_left.move_down()
+                else:
+                    if y_tip < y_base:
+                        self.__paddle_right.move_up()
+                    else:
+                        self.__paddle_right.move_down()
 
     def __main_loop(self):
         clock = pygame.time.Clock()
@@ -40,9 +88,13 @@ class InGame:
             for event in pygame.event.get():
                 self.__handle_event(event)
 
-            self.__handle_key()
+            self.__show_camera()
+
             self.__draw()
             clock.tick(FPS)
+
+        self.cap.release()
+        cv2.destroyAllWindows()
 
     def __draw(self):
         from screens.main_window import SCREEN_HEIGHT, SCREEN_WIDTH
@@ -51,7 +103,8 @@ class InGame:
         score_text = fonts.TITLE_TEXT_STYLE.render(f"{self.__score_left} - {self.__score_right}",
                                                    True, Color('antiquewhite4'))
         self.__screen.blit(score_text,
-                           (SCREEN_WIDTH // 2 - score_text.get_width() // 2, SCREEN_HEIGHT // 2 - score_text.get_height() // 2))
+                           (SCREEN_WIDTH // 2 - score_text.get_width() // 2,
+                            SCREEN_HEIGHT // 2 - score_text.get_height() // 2))
 
         up_text = fonts.BODY_TEXT_STYLE.render(
             "UP", True, Color('antiquewhite4'))
@@ -114,11 +167,19 @@ class InGame:
 
                 body_text = fonts.BODY_TEXT_STYLE.render(
                     "Click mouse to back to menu!", True, Color('antiquewhite4'))
-                self.__screen.blit(body_text, (SCREEN_WIDTH // 2 - body_text.get_width() // 2, SCREEN_HEIGHT //2 - body_text.get_height() // 2 + 50))
+                self.__screen.blit(body_text, (
+                SCREEN_WIDTH // 2 - body_text.get_width() // 2, SCREEN_HEIGHT // 2 - body_text.get_height() // 2 + 50))
 
                 pygame.display.flip()
 
         pygame.display.flip()
+    
+    def __draw_landmarks(self, frame):
+        self.result = self.hands.process(frame)
+
+        if self.result.multi_hand_landmarks:
+            for hand_landmarks in self.result.multi_hand_landmarks:
+                mp_drawing.draw_landmarks(frame, hand_landmarks, mp.solutions.hands.HAND_CONNECTIONS)
 
     def __increase_speed(self):
         self.__speed += 0.5
@@ -129,19 +190,6 @@ class InGame:
         if event.type == pygame.QUIT:
             self.__is_running = False
             pygame.quit()
-
-    def __handle_key(self):
-        keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_w] and not keys[pygame.K_s]:
-            self.__paddle_left.move_up()
-        elif keys[pygame.K_s] and not keys[pygame.K_w]:
-            self.__paddle_left.move_down()
-
-        if keys[pygame.K_UP] and not keys[pygame.K_DOWN]:
-            self.__paddle_right.move_up()
-        elif keys[pygame.K_DOWN] and not keys[pygame.K_UP]:
-            self.__paddle_right.move_down()
 
     def __reset_ball(self):
         from screens.main_window import SCREEN_HEIGHT, SCREEN_WIDTH

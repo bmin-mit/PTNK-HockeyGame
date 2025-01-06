@@ -14,6 +14,9 @@ class MainWindow:
     __is_running: bool
 
     def __init__(self):
+        x = 1980 // 2
+        y = 30
+        __import__('os').environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x,y)
         self.__screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.__button1 = Button(self.__screen, SCREEN_WIDTH // 2, 275, "Start")
         self.__button2 = Button(self.__screen, SCREEN_WIDTH // 2, 350, "Instruction")

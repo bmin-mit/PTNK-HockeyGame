@@ -20,29 +20,38 @@ class Instruction:
 
     def draw1(self):
         self.__screen.fill(Color('antiquewhite'))
-        title_text = fonts.INSTRUCTION_TEXT_STYLE.render("Press W, S to move\nthe left paddle",
-                                                   True, Color('antiquewhite4'))
+        title_text = fonts.INSTRUCTION_TEXT_STYLE.render("Point your index finger UP, DOWN",
+                                                         True, Color('antiquewhite4'))
         self.__screen.blit(title_text,
                            (self.SCREEN_WIDTH // 2 - title_text.get_width() // 2, self.SCREEN_HEIGHT // 2 - 100))
+        title_text = fonts.INSTRUCTION_TEXT_STYLE.render("to move the left paddle inside the left frame",
+                                                         True, Color('antiquewhite4'))
+        self.__screen.blit(title_text,
+                           (self.SCREEN_WIDTH // 2 - title_text.get_width() // 2, self.SCREEN_HEIGHT // 2 - 50))
 
         continue_text = fonts.BODY_TEXT_STYLE.render("Click mouse to continue",
                                                      True, Color('antiquewhite3'))
         self.__screen.blit(continue_text,
-                           (self.SCREEN_WIDTH // 2 - continue_text.get_width() // 2, self.SCREEN_HEIGHT // 2))
+                           (self.SCREEN_WIDTH // 2 - continue_text.get_width() // 2, self.SCREEN_HEIGHT // 2 + 50))
 
         pygame.display.flip()
 
     def draw2(self):
         self.__screen.fill(Color('antiquewhite'))
-        title_text = fonts.INSTRUCTION_TEXT_STYLE.render("Press UP, DOWN to move\nthe right paddle",
+        title_text = fonts.INSTRUCTION_TEXT_STYLE.render("Point your index finger UP, DOWN",
                                                    True, Color('antiquewhite4'))
         self.__screen.blit(title_text,
                            (self.SCREEN_WIDTH // 2 - title_text.get_width() // 2, self.SCREEN_HEIGHT // 2 - 100))
+        
+        title_text = fonts.INSTRUCTION_TEXT_STYLE.render("to move the right paddle inside the right frame",
+                                                         True, Color('antiquewhite4'))
+        self.__screen.blit(title_text,
+                           (self.SCREEN_WIDTH // 2 - title_text.get_width() // 2, self.SCREEN_HEIGHT // 2 - 50))
 
         continue_text = fonts.BODY_TEXT_STYLE.render("Click mouse to continue",
                                                      True, Color('antiquewhite3'))
         self.__screen.blit(continue_text,
-                           (self.SCREEN_WIDTH // 2 - continue_text.get_width() // 2, self.SCREEN_HEIGHT // 2))
+                           (self.SCREEN_WIDTH // 2 - continue_text.get_width() // 2, self.SCREEN_HEIGHT // 2 + 50))
 
         pygame.display.flip()
 
