@@ -10,11 +10,12 @@ class Paddle(Rect):
     screen: pygame.Surface
     sound: pygame.mixer.Sound
 
-    def __init__(self, screen, pos_x, pos_y):
+    def __init__(self, screen, pos_x, pos_y, speed=7):
         from screens.main_window import SCREEN_HEIGHT, SCREEN_WIDTH
 
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
         self.SCREEN_WIDTH = SCREEN_WIDTH
+        self.speed = speed
 
         super().__init__(pos_x, pos_y, self.width, self.height)
         self.screen = screen

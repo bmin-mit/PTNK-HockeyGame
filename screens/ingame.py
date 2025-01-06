@@ -18,10 +18,11 @@ class InGame:
     __ball: Ball
     __screen: pygame.Surface
     __is_running: bool
-    __speed: float = 7
+    __default_speed: float = 7
     __score_left: int = 0
     __score_right: int = 0
     __hands: mp.solutions.hands.Hands
+    __current_match: int = 0
 
     def __init__(self, screen):
         from screens.main_window import SCREEN_HEIGHT, SCREEN_WIDTH
@@ -35,7 +36,7 @@ class InGame:
         self.__paddle_right = Paddle(
             screen, SCREEN_WIDTH - 50 - Paddle.width, SCREEN_HEIGHT // 2 - Paddle.height // 2)
         self.__ball = Ball(self.__screen,
-                           SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, self.__speed)
+                           SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, self.__default_speed)
 
         self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
         self.ret, self.frame = self.cap.read()
@@ -150,18 +151,7 @@ class InGame:
         self.__paddle_left.draw()
         self.__paddle_right.draw()
         self.__ball.move()
-
-        if self.__paddle_left.collidepoint(self.__ball.x - Ball.RADIUS, self.__ball.y):
-            self.__ball.bounce_left()
-            self.__paddle_left.play_sound()
-        if self.__paddle_right.collidepoint(self.__ball.x + Ball.RADIUS, self.__ball.y):
-            self.__ball.bounce_right()
-            self.__paddle_right.play_sound()
-        if self.__ball.y - Ball.RADIUS < 0:
-            self.__ball.bounce_top()
-        if self.__ball.y + Ball.RADIUS > self.SCREEN_HEIGHT:
-            self.__ball.bounce_bottom()
-
+        
         if self.__ball.x + Ball.RADIUS < 0:
             self.__score_right += 1
             self.__increase_speed()
@@ -170,6 +160,19 @@ class InGame:
             self.__score_left += 1
             self.__increase_speed()
             self.__reset_ball()
+
+        if self.__paddle_left.collidepoint(self.__ball.x - Ball.RADIUS, self.__ball.y):
+            self.__ball.bounce_left()
+            self.__paddle_left.play_sound()
+            self.__increase_speed(1)
+        if self.__paddle_right.collidepoint(self.__ball.x + Ball.RADIUS, self.__ball.y):
+            self.__ball.bounce_right()
+            self.__paddle_right.play_sound()
+            self.__increase_speed(1)
+        if self.__ball.y - Ball.RADIUS < 0:
+            self.__ball.bounce_top()
+        if self.__ball.y + Ball.RADIUS > self.SCREEN_HEIGHT:
+            self.__ball.bounce_bottom()
 
         if max(self.__score_left, self.__score_right) == 5:
             write_data(self.__score_left, self.__score_right)
@@ -204,10 +207,10 @@ class InGame:
             for hand_landmarks in self.result.multi_hand_landmarks:
                 mp_drawing.draw_landmarks(frame, hand_landmarks, mp.solutions.hands.HAND_CONNECTIONS)
 
-    def __increase_speed(self):
-        self.__speed += 0.75
-        self.__paddle_left.speed += 0.75
-        self.__paddle_right.speed += 0.75
+    def __increase_speed(self, value=1):
+        self.__ball.speed += value
+        self.__paddle_left.speed += value
+        self.__paddle_right.speed += value
 
     def __handle_event(self, event):
         if event.type == pygame.QUIT:
@@ -216,5 +219,10 @@ class InGame:
 
     def __reset_ball(self):
         from screens.main_window import SCREEN_HEIGHT, SCREEN_WIDTH
+        self.__current_match += 1
         self.__ball = Ball(self.__screen,
-                           SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, self.__speed)
+                           SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, self.__default_speed + self.__current_match)
+        self.__paddle_left = Paddle(
+            self.__screen, 50, SCREEN_HEIGHT // 2 - Paddle.height // 2, self.__default_speed + self.__current_match)
+        self.__paddle_right = Paddle(
+            self.__screen, SCREEN_WIDTH - 50 - Paddle.width, SCREEN_HEIGHT // 2 - Paddle.height // 2, self.__default_speed + self.__current_match)

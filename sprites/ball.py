@@ -17,6 +17,8 @@ class Ball:
         self.y = y
         self.direction = randint(-45, 45) if randint(
             0, 1) else randint(135, 225)
+        if self.direction == 0:
+            self.direction = randint(1, 45) if randint(0, 1) else randint(-45, -1)
         self.screen = screen
         self.speed = speed
 
