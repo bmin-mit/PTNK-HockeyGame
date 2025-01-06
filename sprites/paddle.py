@@ -5,7 +5,7 @@ import pygame
 class Paddle(Rect):
     width: int = 20
     height: int = 100
-    speed: int = 5
+    speed: int = 7
     rect: Rect
     screen: pygame.Surface
     sound: pygame.mixer.Sound
