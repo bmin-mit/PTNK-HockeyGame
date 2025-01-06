@@ -4,7 +4,7 @@ from utils import fonts
 import pygame
 
 class Button(Rect):
-    width: int = 200
+    width: int = 225
     height: int = 50
     rect: Rect
     screen: pygame.Surface
